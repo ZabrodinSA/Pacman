@@ -1,0 +1,50 @@
+syntax = "proto3";
+package com.pacman.protobuf;
+option java_multiple_files = true;
+
+
+message Map {
+  int32 sizeX = 1;
+  int32 sizeY = 2;
+  enum CellState {
+    WALL = 0;
+    EMPTY = 1;
+    POINT = 2;
+  }
+  message Cell {
+    int32 x = 1;
+    int32 y = 2;
+    CellState state = 3;
+  }
+  repeated Cell cells = 4;
+}
+
+message Player {
+  int32 posX = 1;
+  int32 posY = 2;
+  string ID = 3;
+  MoveDirection direction = 4;
+  int32 moveTimeMS = 5;
+}
+
+message Players {
+  repeated Player players = 1;
+}
+
+message Message {
+  Map map = 1;
+  Players players = 2;
+}
+
+message MoveCommands {
+  repeated MoveDirection directions = 1;
+  string ID = 2;
+}
+enum MoveDirection {
+    UP = 0;
+    DOWN = 1;
+    RIGHT = 2;
+    LEFT = 3;
+    NON = 4;
+}
+
