@@ -126,9 +126,9 @@ public class PlayerClass {
             playerBuilder.setPosX(x);
             playerBuilder.setPosY(y);
 
-            map = mapBuilder.build();
             player = playerBuilder.build();
-            Game.mh.UpdateMap(map);
+            Game.map = map = mapBuilder.build();
+            Game.SendMessage();
             return;
         }
     }

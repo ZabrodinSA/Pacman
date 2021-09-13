@@ -84,7 +84,6 @@ public class Client : MonoBehaviour
         newCommands = SetCommands();
         if (!oldCommands.Equals(newCommands))
         {
-            Debug.Log(newCommands);
             client.Send(newCommands);
             oldCommands = newCommands;
         }

@@ -1,13 +1,20 @@
 package com.pacman.server;
 
+import com.pacman.game.Game;
+import com.pacman.protobuf.Players;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import java.io.FileNotFoundException;
+
 public class ServerApp {
-     public  static  void  main (String[] args) {
+     public  static  void  main (String[] args) throws FileNotFoundException {
+         Players players = Players.newBuilder().build();
+         Game game = new Game();
+
          EventLoopGroup bossGroup = new NioEventLoopGroup(1);
          EventLoopGroup workerGroup = new NioEventLoopGroup();
          try {
