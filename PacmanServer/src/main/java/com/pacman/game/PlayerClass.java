@@ -102,9 +102,6 @@ public class PlayerClass {
             case RIGHT:
                 SetPos(player.getPosX() + 1, player.getPosY());
                 break;
-            case NON:
-                Game.SendMessage();
-                break;
         }
     }
 
@@ -132,8 +129,6 @@ public class PlayerClass {
             player = playerBuilder.build();
             Game.map = map = mapBuilder.build();
             Game.SendMessage();
-            System.out.println(player.getDirection());
-
             return;
         }
     }

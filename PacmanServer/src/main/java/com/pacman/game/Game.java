@@ -3,14 +3,12 @@ package com.pacman.game;
 import com.pacman.protobuf.Map;
 import com.pacman.protobuf.Message;
 import com.pacman.protobuf.Players;
-import com.pacman.server.MainHandler;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Thread {
-    public static MainHandler mh;
     public static Map map;
     public static List<PlayerClass> playerClasses;
     public static int moveTimeMS = 100;
@@ -41,14 +39,6 @@ public class Game extends Thread {
          for(PlayerClass playerClass: playerClasses) {
              playerClass.MovePlayer();
         }
-    }
-
-    public void UpdateMap (Map map) {
-        Map.Builder builder = Map.newBuilder(map);
-        for (PlayerClass playerClass: Game.playerClasses) {
-            playerClass.map = map;
-        }
-        Game.map = builder.build();
     }
 
     public static void SendMessage () {
