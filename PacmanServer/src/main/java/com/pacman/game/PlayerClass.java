@@ -20,6 +20,7 @@ public class PlayerClass {
         Player.Builder playerBuilder = Player.newBuilder();
         playerBuilder.setID(ID);
         playerBuilder.setMoveTimeMS(Game.moveTimeMS);
+        playerBuilder.setDirection(MoveDirection.NON);
         Random random = new Random();
         int randomInt = random.nextInt(3);
         switch (randomInt) {
@@ -68,7 +69,6 @@ public class PlayerClass {
             if (direction != null)  {
                 break;
             }
-
         }
         Player.Builder builder = Player.newBuilder(player);
         if (direction == null) {
@@ -102,6 +102,9 @@ public class PlayerClass {
             case RIGHT:
                 SetPos(player.getPosX() + 1, player.getPosY());
                 break;
+            case NON:
+                Game.SendMessage();
+                break;
         }
     }
 
@@ -129,6 +132,8 @@ public class PlayerClass {
             player = playerBuilder.build();
             Game.map = map = mapBuilder.build();
             Game.SendMessage();
+            System.out.println(player.getDirection());
+
             return;
         }
     }

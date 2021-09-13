@@ -58,7 +58,7 @@ public class Client : MonoBehaviour
                 else
                 {
                     playerObj.GetComponent<PlayerMover>().player = player;
-                    playerObj.GetComponent<PlayerMover>().movePlayer();
+                   // playerObj.GetComponent<PlayerMover>().movePlayer();
                 }
             }
             //Убираем отключившихся
