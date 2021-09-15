@@ -18,54 +18,51 @@ public class PlayerMover : MonoBehaviour
         gridStep = collider.size.x * _transform.localScale.x;
         speed = gridStep * 1000 / player.MoveTimeMS;
         rotateTime = player.MoveTimeMS / 1000;
-        SetPos();
+        SetPos(player.PosX * gridStep, player.PosY * gridStep);
     }
 
     private void Update()
     {
+        if (_transform.position.y < player.PosY * gridStep)
+        {
+            SetPos(_transform.position.x, _transform.position.y + speed * Time.deltaTime);
+        }
+        if (_transform.position.y > player.PosY * gridStep)
+        {
+            SetPos(_transform.position.x, _transform.position.y - speed * Time.deltaTime);
+        }
+        if (_transform.position.x < player.PosX * gridStep)
+        {
+            SetPos(_transform.position.x + speed * Time.deltaTime, _transform.position.y);
+        }
+        if (_transform.position.x > player.PosX * gridStep)
+        {
+            SetPos(_transform.position.x - speed * Time.deltaTime, _transform.position.y);
+        }
         switch (player.Direction)
         {
             case MoveDirection.Up:
-                if (_transform.position.y < player.PosY * gridStep)
-                {
-                    _transform.position = new Vector3(_transform.position.x, _transform.position.y + speed * Time.deltaTime, 0);
-                    _transform.DORotate(new Vector3(0, 0, 90), rotateTime);
-                }
-                else SetPos();
+                SetAngle(90);  
                 break;
             case MoveDirection.Down:
-                if (_transform.position.y > player.PosY * gridStep)
-                {
-                    _transform.position = new Vector3(_transform.position.x, _transform.position.y - speed * Time.deltaTime, 0);
-                    _transform.DORotate(new Vector3(0, 0, 270), rotateTime);
-                }
-                else SetPos();
+                SetAngle(270);
                 break;
             case MoveDirection.Right:
-                if (_transform.position.x < player.PosX * gridStep)
-                {
-                    _transform.position = new Vector3(_transform.position.x + speed * Time.deltaTime, _transform.position.y, 0);
-                    _transform.DORotate(new Vector3(0, 0, 0), rotateTime);
-                }
-                else SetPos();
+                SetAngle(0);
                 break;
             case MoveDirection.Left:
-                if (_transform.position.x > player.PosX * gridStep)
-                {
-                    _transform.position = new Vector3(_transform.position.x - speed * Time.deltaTime, _transform.position.y, 0);
-                    _transform.DORotate(new Vector3(0, 0, 180), rotateTime);
-                }
-                else SetPos();
-                break;
-            case MoveDirection.Non:
-                SetPos();
+                SetAngle(180);
                 break;
         }
     }
 
-    public void SetPos()
+    private void SetPos(float x, float y)
     {
-        _transform.position = new Vector3(player.PosX * gridStep, player.PosY * gridStep, 0);
+        _transform.position = new Vector3(x, y, 0);
     }
 
+    private void SetAngle (float angle)
+    {
+        _transform.DORotate(new Vector3(0, 0, angle), rotateTime);
+    }
 }

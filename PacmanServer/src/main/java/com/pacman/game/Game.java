@@ -2,6 +2,7 @@ package com.pacman.game;
 
 import com.pacman.protobuf.Map;
 import com.pacman.protobuf.Message;
+import com.pacman.protobuf.MoveDirection;
 import com.pacman.protobuf.Players;
 
 import java.io.FileNotFoundException;
@@ -37,7 +38,9 @@ public class Game extends Thread {
 
     private void MovePlayers () {
          for(PlayerClass playerClass: playerClasses) {
-             playerClass.MovePlayer();
+             if (playerClass.player.getDirection() != MoveDirection.NON) {
+                 playerClass.MovePlayer();
+             }
         }
     }
 

@@ -102,6 +102,8 @@ public class PlayerClass {
             case RIGHT:
                 SetPos(player.getPosX() + 1, player.getPosY());
                 break;
+            case NON:
+                break;
         }
     }
 
@@ -111,10 +113,8 @@ public class PlayerClass {
 
         if (x >= Game.map.getSizeX() || y >= Game.map.getSizeY()) {
             System.out.println("Невозможно разместить игрока за пределами поля");
-            return;
         } else if (Game.map.getCells(indexNew).getState() == Map.CellState.WALL) {
-            SetDirection();
-            return ;
+           SetDirection();
         } else {
             Map.Builder mapBuilder = Map.newBuilder(Game.map);
             Player.Builder playerBuilder = Player.newBuilder(player);
@@ -129,7 +129,6 @@ public class PlayerClass {
             player = playerBuilder.build();
             Game.map = mapBuilder.build();
             Game.SendMessage();
-            return;
         }
     }
 }
