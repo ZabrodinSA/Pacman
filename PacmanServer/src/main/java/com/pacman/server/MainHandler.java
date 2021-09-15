@@ -11,7 +11,7 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        PlayerClass player = new PlayerClass(Game.map, ctx.channel().id().asShortText(), ctx.channel());
+        PlayerClass player = new PlayerClass(ctx.channel().id().asShortText(), ctx.channel());
         Game.playerClasses.add(player);
         Game.SendMessage();
     }

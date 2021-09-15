@@ -9,13 +9,13 @@ import java.util.Random;
 
 public class PlayerClass {
     public Channel channel;
-    public Map map;
+//    public Map map;
     public Player player;
     private List<MoveDirection> directions = new ArrayList<>();
 
 
-    public PlayerClass (Map map, String ID,  Channel channel) {
-        this.map = map;
+    public PlayerClass (String ID,  Channel channel) {
+//        this.map = map;
         this.channel = channel;
         Player.Builder playerBuilder = Player.newBuilder();
         playerBuilder.setID(ID);
@@ -30,14 +30,14 @@ public class PlayerClass {
                 break;
             case (1):
                 playerBuilder.setPosX(1);
-                playerBuilder.setPosY(map.getSizeY() - 2);
+                playerBuilder.setPosY(Game.map.getSizeY() - 2);
                 break;
             case (2):
-                playerBuilder.setPosX(map.getSizeX() - 2);
-                playerBuilder.setPosY(map.getSizeY() - 2);
+                playerBuilder.setPosX(Game.map.getSizeX() - 2);
+                playerBuilder.setPosY(Game.map.getSizeY() - 2);
                 break;
             case (3):
-                playerBuilder.setPosX(map.getSizeX() - 2);
+                playerBuilder.setPosX(Game.map.getSizeX() - 2);
                 playerBuilder.setPosY(1);
                 break;
         }
@@ -80,8 +80,8 @@ public class PlayerClass {
     }
 
     private boolean CheckPos (int x, int y) {
-        int indexNew = x * map.getSizeY() + y;
-        if (map.getCells(indexNew).getState() == Map.CellState.WALL) {
+        int indexNew = x * Game.map.getSizeY() + y;
+        if (Game.map.getCells(indexNew).getState() == Map.CellState.WALL) {
             return false;
         } else {
             return  true;
@@ -106,19 +106,19 @@ public class PlayerClass {
     }
 
     private void SetPos (int x, int y) {
-        int indexNew = x * map.getSizeY() + y;
-        int indexOld = player.getPosX() * map.getSizeY()+ player.getPosY();
+        int indexNew = x * Game.map.getSizeY() + y;
+        int indexOld = player.getPosX() * Game.map.getSizeY()+ player.getPosY();
 
-        if (x >= map.getSizeX() || y >= map.getSizeY()) {
+        if (x >= Game.map.getSizeX() || y >= Game.map.getSizeY()) {
             System.out.println("Невозможно разместить игрока за пределами поля");
             return;
-        } else if (map.getCells(indexNew).getState() == Map.CellState.WALL) {
+        } else if (Game.map.getCells(indexNew).getState() == Map.CellState.WALL) {
             SetDirection();
             return ;
         } else {
-            Map.Builder mapBuilder = Map.newBuilder(map);
+            Map.Builder mapBuilder = Map.newBuilder(Game.map);
             Player.Builder playerBuilder = Player.newBuilder(player);
-            Map.Cell.Builder cellBuilder = Map.Cell.newBuilder(mapBuilder.getCells(indexOld));
+            Map.Cell.Builder cellBuilder = Map.Cell.newBuilder();
 
             cellBuilder.setState(Map.CellState.EMPTY);
             mapBuilder.setCells(indexOld, cellBuilder.build());
@@ -127,7 +127,7 @@ public class PlayerClass {
             playerBuilder.setPosY(y);
 
             player = playerBuilder.build();
-            Game.map = map = mapBuilder.build();
+            Game.map = mapBuilder.build();
             Game.SendMessage();
             return;
         }
